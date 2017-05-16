@@ -31,7 +31,6 @@ main {
   background-color: white;
   padding-top: 140px;
   text-align: center;
-  height: 25em;
 
 }
 
@@ -69,4 +68,90 @@ main .new-tweet .counter{
   right: 20px;
   position: absolute;
   bottom: 0;
+}
+
+
+main #tweets .tweet{
+  margin-top: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+  background-color:  white;
+  border: 2px solid;
+  border-radius: 15px;
+  position: relative;
+  font-size: 20px;
+  color: black;
+  border-color: lightgray;
+  opacity: 0.5;
+}
+
+main #tweets .tweet:hover {
+  opacity: 1;
+
+}
+main #tweets .tweet header {
+  background-color: #eee;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  width: 100%;
+  height: 100px;
+
+}
+
+main #tweets .tweet header img {
+  float: left;
+  border-radius: 15px;
+  height: 75px;
+  width: 75px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+main #tweets .tweet header h3 {
+  float: left;
+  padding-left: 10px;
+  color: rgba(64, 84, 72, 0.51);
+}
+
+main #tweets .tweet header p{
+  float: right;
+  color: gray;
+  font-size: 15px;
+  padding-right: 10px;
+  padding-top: 13px;
+}
+
+main #tweets .tweet p{
+  padding-right: 10px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+main #tweets .tweet footer {
+  text-align: left;
+  padding-left: 10px;
+  border-top: solid;
+  border-top-color: lightgray;
+
+
+}
+
+main #tweets .tweet footer p {
+  font-size: 15px;
+  text-align: left;
+  padding-left: 10px;
+}
+main #tweets .tweet:hover footer img {
+  text-align: right;
+  display: block;
+  right: 20px;
+  position: absolute;
+  bottom: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+main #tweets .tweet footer img {
+  display: none;
 }
