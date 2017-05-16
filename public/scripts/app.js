@@ -61,11 +61,6 @@
 
   };
 
-
-
-
-
-
 function createTweetElement(aTweet) {
   let $tweet = $('<article>').addClass('tweet');
   let header =$('<header>')
@@ -82,9 +77,21 @@ function createTweetElement(aTweet) {
 }
 
 
-
-
  $(document).ready(function() {
+  $("form").on('submit', function (e) {
+    e.preventDefault();
+    let twText = $(this).serialize();
     renderTweets(data);
+    $.ajax({
+      url: '/tweets/',
+      method: 'POST',
+      data: twText
+    })
+    // .done(function (data) {
+    //   console.log(data);
+    // });
+
+  })
+
 
 });
