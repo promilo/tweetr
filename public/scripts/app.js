@@ -61,10 +61,10 @@
 
   };
 
-function renderLastTweet(tweets) {
-  let lastTweet = tweets[tweets.length-1];
-  $('#tweets').prepend(createTweetElement(lastTweet));
-  }
+// function renderLastTweet(tweets) {
+//   let lastTweet = tweets[tweets.length-1];
+//   $('#tweets').prepend(createTweetElement(lastTweet));
+//   }
 
 function createTweetElement(aTweet) {
   let $tweet = $('<article>').addClass('tweet');
@@ -81,30 +81,34 @@ function createTweetElement(aTweet) {
   return $tweet;
 }
 
-function loadTweets(num) {
+function loadTweets() {
   $.ajax({
     url:'/tweets/',
     method: 'GET',
     success: function (data) {
       console.log(data);
-      if (num === 0) {
+      // if (num === 0) {
       renderTweets(data);
-      }
-      else {
-        renderLastTweet(data);
-      }
-    }
+    //   }
+    //   else {
+    //     renderLastTweet(data);
+    //   }
+    // }
   // }).done( function(data) {
   //   renderTweets(Data)
   // })
-  })
+}})
 }
 
 
  $(document).ready(function() {
    loadTweets(0);
    $(".nothing").slideUp("slow");
-   $(".tooLong").slideUp("slow");
+   $(".tooLong").slideUp("");
+   $(".compose").on("click", function () {
+     $(".new-tweet").slideToggle("fast")
+     $("textarea").focus();
+   })
    $("form").on('input', function (e) {
      let liveInput = $(this).closest(".new-tweet").find("textarea").val();
      if (liveInput.length > 0){
@@ -136,9 +140,9 @@ function loadTweets(num) {
         success: function(suc) {
           console.log('suc');
           // loadTweets()
-          // $('#tweets').html("");
-          // loadTweets();
-          loadTweets(1);
+          $('#tweets').html("");
+          loadTweets();
+          // loadTweets(1);
 
         },
         error: function(err) {

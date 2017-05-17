@@ -6,7 +6,7 @@
   color: #e8fdff;
   padding-left: 2em;
   padding-right: 2em;
-   z-index: 1;
+  z-index: 1;
 }
 
 #nav-bar .logo {
@@ -19,5 +19,18 @@
   float: left;
   font-size: 200%;
   line-height: 80px;
+
+}
+
+#nav-bar .compose {
+  float: right;
+  width: 100px;
+  height: 70px;
+  border-radius: 15px;
+  border: solid;
+}
+
+#nav-bar .compose:hover {
+  color: green;
 
 }
