@@ -57,7 +57,7 @@
      // takes return value and appends it to the tweets container
 
     tweets.forEach( (tweet) =>
-    $('#tweets').append(createTweetElement(tweet)));
+    $('#tweets').prepend(createTweetElement(tweet)));
 
   };
 
@@ -81,15 +81,26 @@ function createTweetElement(aTweet) {
    loadTweets();
   $("form").on('submit', function (e) {
     e.preventDefault();
+
+    let inputText = $(this).closest(".new-tweet").find("textarea").val();
     let twText = $(this).serialize();
     // renderTweets(data);
+    if (inputText.length < 1) {
+      return alert("at least input something");
+    }
+    if (inputText.length > 140) {
+      return alert("It is too long");
+    }
     $.ajax({
       url: '/tweets/',
       method: 'POST',
       data: twText,
       success: function(suc) {
         console.log('suc');
+        // loadTweets()
+        $('#tweets').html("");
         loadTweets();
+
       },
       error: function(err) {
         console.log('err');
