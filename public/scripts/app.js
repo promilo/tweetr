@@ -61,6 +61,11 @@
 
   };
 
+function renderLastTweet(tweets) {
+  let lastTweet = tweets[tweets.length-1];
+  $('#tweets').prepend(createTweetElement(lastTweet));
+  }
+
 function createTweetElement(aTweet) {
   let $tweet = $('<article>').addClass('tweet');
   let header =$('<header>')
@@ -76,53 +81,73 @@ function createTweetElement(aTweet) {
   return $tweet;
 }
 
-
- $(document).ready(function() {
-   loadTweets();
-  $("form").on('submit', function (e) {
-    e.preventDefault();
-
-    let inputText = $(this).closest(".new-tweet").find("textarea").val();
-    let twText = $(this).serialize();
-    // renderTweets(data);
-    if (inputText.length < 1) {
-      return alert("at least input something");
-    }
-    if (inputText.length > 140) {
-      return alert("It is too long");
-    }
-    $.ajax({
-      url: '/tweets/',
-      method: 'POST',
-      data: twText,
-      success: function(suc) {
-        console.log('suc');
-        // loadTweets()
-        $('#tweets').html("");
-        loadTweets();
-
-      },
-      error: function(err) {
-        console.log('err');
-      }
-    })
-    // .done(function (data) {
-    //   console.log(data);
-    // });
-
-  });
-});
-
-function loadTweets() {
+function loadTweets(num) {
   $.ajax({
     url:'/tweets/',
     method: 'GET',
     success: function (data) {
       console.log(data);
+      if (num === 0) {
       renderTweets(data);
+      }
+      else {
+        renderLastTweet(data);
+      }
     }
   // }).done( function(data) {
   //   renderTweets(Data)
   // })
   })
 }
+
+
+ $(document).ready(function() {
+   loadTweets(0);
+   $(".nothing").slideUp("slow");
+   $(".tooLong").slideUp("slow");
+   $("form").on('input', function (e) {
+     let liveInput = $(this).closest(".new-tweet").find("textarea").val();
+     if (liveInput.length > 0){
+       $(".nothing").slideUp("slow");
+     }
+     if (liveInput.length < 141) {
+       $(".tooLong").slideUp("slow");
+     }
+   });
+   $("form").on('submit', function (e) {
+      e.preventDefault();
+
+      let inputText = $(this).closest(".new-tweet").find("textarea").val();
+      let twText = $(this).serialize();
+      // renderTweets(data);
+      if (inputText.length < 1) {
+        $(".nothing").slideDown("slow");
+        // return alert("at leastnput something");
+      }
+      if (inputText.length > 140) {
+        // return alert("It is too long");
+        $(".tooLong").slideDown("slow");
+        return;
+      }
+      $.ajax({
+        url: '/tweets/',
+        method: 'POST',
+        data: twText,
+        success: function(suc) {
+          console.log('suc');
+          // loadTweets()
+          // $('#tweets').html("");
+          // loadTweets();
+          loadTweets(1);
+
+        },
+        error: function(err) {
+          console.log('err');
+        }
+      })
+      // .done(function (data) {
+      //   console.log(data);
+      // });
+
+    });
+});
