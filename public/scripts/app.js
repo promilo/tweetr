@@ -66,6 +66,33 @@
 //   $('#tweets').prepend(createTweetElement(lastTweet));
 //   }
 
+function calculateTime(date) {
+  var timeNow = new Date();
+  var timePosted = new Date(date);
+  var yearsAgo = timeNow.getFullYear() - timePosted.getFullYear();
+  if (yearsAgo > 1){
+    return yearsAgo + " years ago"
+  }
+  var monthsAgo = timeNow.getMonth() - timePosted.getMonth();
+  if (monthsAgo > 1){
+    return monthsAgo + " months ago"
+  }
+  var daysAgo = timeNow.getDay() - timePosted.getDay();
+  if (daysAgo > 1){
+    return daysAgo + " days ago"
+  }
+  var hoursAgo = timeNow.getHours() - timePosted.getHours();
+  if (hoursAgo > 1){
+    return hoursAgo + " hours ago"
+  }
+  var minutesAgo = timeNow.getMinutes() - timePosted.getMinutes();
+  if (minutesAgo > 1){
+    return minutesAgo + " minutes ago"
+  }
+  var secondsAgo = timeNow.getSeconds() - timePosted.getSeconds();
+  return secondsAgo + " seconds ago"
+}
+
 function createTweetElement(aTweet) {
   let $tweet = $('<article>').addClass('tweet');
   let header =$('<header>')
@@ -73,7 +100,7 @@ function createTweetElement(aTweet) {
   header.append($('<h3>').text(aTweet.user.name));
   header.append($('<p>').text(aTweet.user.handle));
   let footer = $('<footer>');
-  footer.append($('<p>').text(aTweet.created_at));
+  footer.append($('<p>').text(calculateTime(aTweet.created_at)));
   footer.append($('<img>').attr("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Bot%C3%B3n_Me_gusta.svg/200px-Bot%C3%B3n_Me_gusta.svg.png"));
   $tweet.append(header);
   $tweet.append($('<p>').text(aTweet.content.text));
