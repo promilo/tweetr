@@ -1,102 +1,43 @@
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
- // Fake data taken from tweets.json
- // var data = [
- //   {
- //     "user": {
- //       "name": "Newton",
- //       "avatars": {
- //         "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
- //         "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
- //         "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
- //       },
- //       "handle": "@SirIsaac"
- //     },
- //     "content": {
- //       "text": "If I have seen further it is by standing on the shoulders of giants"
- //     },
- //     "created_at": 1461116232227
- //   },
- //   {
- //     "user": {
- //       "name": "Descartes",
- //       "avatars": {
- //         "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
- //         "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
- //         "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
- //       },
- //       "handle": "@rd" },
- //     "content": {
- //       "text": "Je pense , donc je suis"
- //     },
- //     "created_at": 1461113959088
- //   },
- //   {
- //     "user": {
- //       "name": "Johann von Goethe",
- //       "avatars": {
- //         "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
- //         "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
- //         "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
- //       },
- //       "handle": "@johann49"
- //     },
- //     "content": {
- //       "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
- //     },
- //     "created_at": 1461113796368
- //   }
- // ];
-
- function renderTweets(tweets) {
-   // loops through tweets
-     // calls createTweetElement for each tweet
-     // takes return value and appends it to the tweets container
-
-    tweets.forEach( (tweet) =>
-    $('#tweets').prepend(createTweetElement(tweet)));
-
-  };
-
-// function renderLastTweet(tweets) {
-//   let lastTweet = tweets[tweets.length-1];
-//   $('#tweets').prepend(createTweetElement(lastTweet));
-//   }
-
+"use strict";
+// this is to calculate the time passed when the tweet is posted.
 function calculateTime(date) {
-  var timeNow = new Date();
-  var timePosted = new Date(date);
-  var yearsAgo = timeNow.getFullYear() - timePosted.getFullYear();
+  const timeNow = new Date();
+  const timePosted = new Date(date);
+
+  const yearsAgo = timeNow.getFullYear() - timePosted.getFullYear();
   if (yearsAgo > 1){
-    return yearsAgo + " years ago"
+    return yearsAgo + " years ago";
   }
-  var monthsAgo = timeNow.getMonth() - timePosted.getMonth();
+
+  const monthsAgo = timeNow.getMonth() - timePosted.getMonth();
   if (monthsAgo > 1){
-    return monthsAgo + " months ago"
+    return monthsAgo + " months ago";
   }
-  var daysAgo = timeNow.getDay() - timePosted.getDay();
+
+  const daysAgo = timeNow.getDay() - timePosted.getDay();
   if (daysAgo > 1){
-    return daysAgo + " days ago"
+    return daysAgo + " days ago";
   }
-  var hoursAgo = timeNow.getHours() - timePosted.getHours();
+
+  const hoursAgo = timeNow.getHours() - timePosted.getHours();
   if (hoursAgo > 1){
-    return hoursAgo + " hours ago"
+    return hoursAgo + " hours ago";
   }
-  var minutesAgo = timeNow.getMinutes() - timePosted.getMinutes();
+
+  const minutesAgo = timeNow.getMinutes() - timePosted.getMinutes();
   if (minutesAgo > 1){
-    return minutesAgo + " minutes ago"
+    return minutesAgo + " minutes ago";
   }
-  var secondsAgo = timeNow.getSeconds() - timePosted.getSeconds();
-  return secondsAgo + " seconds ago"
+
+  const secondsAgo = timeNow.getSeconds() - timePosted.getSeconds();
+  return secondsAgo + " seconds ago";
 }
 
+// this function is to append html information to the container.
 function createTweetElement(aTweet) {
   let $tweet = $('<article>').addClass('tweet');
-  let header =$('<header>')
-  header.append($('<img>').attr("src", aTweet.user.avatars.small))
+  let header =$('<header>');
+  header.append($('<img>').attr("src", aTweet.user.avatars.small));
   header.append($('<h3>').text(aTweet.user.name));
   header.append($('<p>').text(aTweet.user.handle));
   let footer = $('<footer>');
@@ -106,79 +47,72 @@ function createTweetElement(aTweet) {
   $tweet.append($('<p>').text(aTweet.content.text));
   $tweet.append(footer);
   return $tweet;
-}
+};
 
+//This is for printing all the tweet from the tweets array.
+ function renderTweets(tweets) {
+    tweets.forEach( (tweet) =>
+    $('#tweets').prepend(createTweetElement(tweet)));
+  };
+
+// This is for loading the tweets from the database and once called invoke renderfunctions to print it to the #tweets container.
 function loadTweets() {
   $.ajax({
     url:'/tweets/',
     method: 'GET',
     success: function (data) {
-      console.log(data);
-      // if (num === 0) {
       renderTweets(data);
-    //   }
-    //   else {
-    //     renderLastTweet(data);
-    //   }
-    // }
-  // }).done( function(data) {
-  //   renderTweets(Data)
-  // })
-}})
-}
+    }});
+};
 
+$(document).ready(function() {
+  loadTweets(); // render the existing tweets in the database.
+  // this is for hiding the text "Too long" and "input something"
+  $(".nothing").slideUp("slow");
+  $(".tooLong").slideUp();
+  // this is for toggling the conposebutton to display compose tweet element.
+  $(".compose").on("click", function () {
+    $(".new-tweet").slideToggle("fast");
+    $("textarea").focus();
+  });
+  // this is for hiding the red flags of "too long" and "input something" when the user corrects it in the textarea.
+  $("form").on('input', function (e) {
+    let liveInput = $(this).closest(".new-tweet").find("textarea").val();
+    if (liveInput.length > 0){
+      $(".nothing").slideUp("slow");
+    }
+    if (liveInput.length < 141) {
+      $(".tooLong").slideUp("slow");
+    }
+  });
 
- $(document).ready(function() {
-   loadTweets(0);
-   $(".nothing").slideUp("slow");
-   $(".tooLong").slideUp("");
-   $(".compose").on("click", function () {
-     $(".new-tweet").slideToggle("fast")
-     $("textarea").focus();
-   })
-   $("form").on('input', function (e) {
-     let liveInput = $(this).closest(".new-tweet").find("textarea").val();
-     if (liveInput.length > 0){
-       $(".nothing").slideUp("slow");
-     }
-     if (liveInput.length < 141) {
-       $(".tooLong").slideUp("slow");
-     }
-   });
-   $("form").on('submit', function (e) {
-      e.preventDefault();
+  $("form").on('submit', function (e) {
+    e.preventDefault();
 
-      let inputText = $(this).closest(".new-tweet").find("textarea").val();
-      let twText = $(this).serialize();
-      // renderTweets(data);
-      if (inputText.length < 1) {
-        $(".nothing").slideDown("slow");
-        // return alert("at leastnput something");
+    let inputText = $(this).closest(".new-tweet").find("textarea").val();
+    let twText = $(this).serialize();
+    //triggering the flag that its an empty string.
+    if (inputText.length < 1) {
+      $(".nothing").slideDown("slow");
+    }
+    //triggering the red flag that the tweet is too long.
+    if (inputText.length > 140) {
+      $(".tooLong").slideDown("slow");
+      return;
+    }
+
+    $.ajax({
+      url: '/tweets/',
+      method: 'POST',
+      data: twText,
+      success: function(suc) {
+        // delete the whole #tweets then re render all the tweets from the database.
+        $('#tweets').html("");
+        loadTweets();
+      },
+      error: function(err) {
+        console.log('err');
       }
-      if (inputText.length > 140) {
-        // return alert("It is too long");
-        $(".tooLong").slideDown("slow");
-        return;
-      }
-      $.ajax({
-        url: '/tweets/',
-        method: 'POST',
-        data: twText,
-        success: function(suc) {
-          console.log('suc');
-          // loadTweets()
-          $('#tweets').html("");
-          loadTweets();
-          // loadTweets(1);
-
-        },
-        error: function(err) {
-          console.log('err');
-        }
-      })
-      // .done(function (data) {
-      //   console.log(data);
-      // });
-
     });
+  });
 });
