@@ -19,4 +19,4 @@ This repository is the starter code for the project: Students will fork and clon
 ## Screenshots
 
 !["Screenshot of composing the tweet"](https://github.com/promilo/tweetr/blob/master/docs/1.png)
-!["Screenshot of the output of the tweet"](https://github.com/promilo/tweetr/blob/master/docs/1.png)
+!["Screenshot of the output of the tweet"](https://github.com/promilo/tweetr/blob/master/docs/2.png)
