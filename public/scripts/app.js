@@ -76,7 +76,7 @@ $(document).ready(function() {
     $("textarea").focus();
   });
   // this is for hiding the red flags of "too long" and "input something" when the user corrects it in the textarea.
-  $("form").on('input', function (e) {
+  $("#newTweet").on('input', function (e) {
     let liveInput = $(this).closest(".new-tweet").find("textarea").val();
     if (liveInput.length > 0){
       $(".nothing").slideUp("slow");
@@ -86,7 +86,7 @@ $(document).ready(function() {
     }
   });
 
-  $("form").on('submit', function (e) {
+  $("#newTweet").on('submit', function (e) {
     e.preventDefault();
 
     let inputText = $(this).closest(".new-tweet").find("textarea").val();
@@ -95,7 +95,7 @@ $(document).ready(function() {
     if (inputText.length < 1) {
       $(".nothing").slideDown("slow");
     }
-    //triggering the red flag that the tweet is too long.
+    //triggering the red flag that t  he tweet is too long.
     if (inputText.length > 140) {
       $(".tooLong").slideDown("slow");
       return;
